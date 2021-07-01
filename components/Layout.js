@@ -1,6 +1,6 @@
 import Head from "next/head";
-import styles from "../styles/Layout.module.css";
-import Header from "../components/Header";
+import styles from "@/styles/Layout.module.css";
+import Header from "./Header";
 import Footer from "./Footer";
 
 export default function Layout({
