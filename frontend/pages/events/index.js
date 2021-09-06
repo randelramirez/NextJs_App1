@@ -17,18 +17,20 @@ export default function EventsPage({ events }) {
   );
 }
 
-//fetch from the server
+// fetch from the server
 // this will execute everytime we go this page
 // export async function getServerSideProps() {
 //   const res = await fetch(`${API_URL}/api/events`);
 //   const events = await res.json();
+
+//   // logging on the terminal not on the browser(this runs on the server)
 //   console.log({ events });
 //   return { props: { events } };
 // }
 
 // build time, data is reteived during build time
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC`);
   const events = await res.json();
   console.log({ events });
   return { props: { events }, revalidate: 1 };

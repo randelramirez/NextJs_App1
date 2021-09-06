@@ -28,7 +28,7 @@ export default function EventPage({ event }) {
         {event.image && (
           <div className={styles.image}>
             <Image
-              src={event.image}
+              src={event.image.formats.medium.url}
               alt={event.name}
               width={960}
               height={600}
@@ -57,10 +57,12 @@ export default function EventPage({ event }) {
 // }
 
 // gets called during build time
+// because this page is a dynamic route we need to use getStaticPaths(to generate all possible pages/routes)
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events`);
   const events = await res.json();
 
+  // we use slug = because [slug].js
   const paths = events.map((event) => ({ params: { slug: event.slug } }));
   return {
     paths,
@@ -68,10 +70,10 @@ export async function getStaticPaths() {
   };
 }
 
-// gets called during blind time
+// gets called during build time
 export async function getStaticProps({ params: { slug } }) {
-  const res = await fetch(`${API_URL}/api/events/${slug}`);
-  const data = await res.json();
+  const res = await fetch(`${API_URL}/events?slug=${slug}`);
+  const events = await res.json();
 
-  return { props: { event: data[0], revalidate: 1 } };
+  return { props: { event: events[0], revalidate: 1 } };
 }

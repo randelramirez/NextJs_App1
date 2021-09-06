@@ -10,7 +10,11 @@ export default function EventItem({ event }) {
           width={170}
           height={100}
           alt={event.slug}
-          src={event.image ? event.image : "/images/event-default.png"}
+          src={
+            event.image
+              ? event.image.formats.thumbnail.url
+              : "/images/event-default.png"
+          }
         />
       </div>
 
